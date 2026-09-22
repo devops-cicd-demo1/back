@@ -39,8 +39,20 @@ pipeline {
                     usernameVariable: 'GHCR_USER',
                     passwordVariable: 'GHCR_TOKEN'
                 )]) {
-                    bat 'docker login ghcr.io -u "%GHCR_USER%" -p "%GHCR_TOKEN%"'
+                    bat 'echo %GHCR_TOKEN% | docker login ghcr.io -u "%GHCR_USER%" --password-stdin'
                 }
+            }
+        }
+
+        stage('Docker Tag') {
+            steps {
+                bat 'docker tag devops-demo/backend:1.0 ghcr.io/devops-cicd-demo1/backend:1.0'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                bat 'docker push ghcr.io/devops-cicd-demo1/backend:1.0'
             }
         }
     }

@@ -31,5 +31,17 @@ pipeline {
                 bat 'docker build -t devops-demo/backend:1.0 .'
             }
         }
+
+        stage('GHCR Login') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-ghcr',
+                    usernameVariable: 'GHCR_USER',
+                    passwordVariable: 'GHCR_TOKEN'
+                )]) {
+                    bat 'docker login ghcr.io -u "%GHCR_USER%" -p "%GHCR_TOKEN%"'
+                }
+            }
+        }
     }
 }

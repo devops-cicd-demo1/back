@@ -25,5 +25,11 @@ pipeline {
                 bat 'docker version'
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t devops-demo/backend:1.0 .'
+            }
+        }
     }
 }

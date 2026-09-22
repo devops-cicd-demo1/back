@@ -48,7 +48,9 @@ pipeline {
             steps {
                 bat 'docker push ghcr.io/devops-cicd-demo1/backend:1.0'
             }
-                    stage('Deploy') {
+        }
+
+        stage('Deploy') {
             steps {
                 bat '''
                     docker pull ghcr.io/devops-cicd-demo1/backend:1.0
@@ -56,7 +58,6 @@ pipeline {
                     docker run -d --name backend-prod -p 5000:5000 ghcr.io/devops-cicd-demo1/backend:1.0
                 '''
             }
-        }
         }
     }
 }
